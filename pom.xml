@@ -8,6 +8,15 @@
     <version>1.1-SNAPSHOT</version>
 
     <name>Reactive rule engine</name>
+    <description>Drools streaming engine embedded in Akka actor for reactive and scalable rules-based applications</description>
+    <url>https://github.com/UniCreditDnA/reactive-rule-engine</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
     <prerequisites>
         <maven>3.3</maven>
@@ -47,7 +56,6 @@
     </scm>
 
     <build>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -221,5 +229,20 @@
         </dependency>
 
     </dependencies>
+
+    <developers>
+        <developer>
+            <name>Simone Grandi</name>
+            <email>simone.grandi@unicredit.eu</email>
+            <organization>Unicredit</organization>
+            <organizationUrl>http://www.unicredit.eu</organizationUrl>
+        </developer>
+        <developer>
+            <name>Federico Stefanato</name>
+            <email>fstefanato.external@unicredit.eu</email>
+            <organization>Unicredit</organization>
+            <organizationUrl>http://www.unicredit.eu</organizationUrl>
+        </developer>
+    </developers>
 
 </project>
