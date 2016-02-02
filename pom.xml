@@ -26,14 +26,16 @@
     </properties>
 
     <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <url>http://usqrtpl5321.internal.unicreditgroup.eu/nexus/content/repositories/releases</url>
-        </repository>
         <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://usqrtpl5321.internal.unicreditgroup.eu/nexus/content/repositories/snapshots</url>
+            <id>ossrh-snapshots</id>
+            <name>ossrh-snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <name>ossrh-releases</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
     </distributionManagement>
 
     <scm>
@@ -88,6 +90,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
             </plugin>
 
         </plugins>
@@ -170,6 +176,24 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+
+                    </executions>
+                    <configuration>
+                        <keyname>UniCreditDnA (Maven Central GPG Key)</keyname>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
