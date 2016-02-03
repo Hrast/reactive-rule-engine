@@ -36,6 +36,9 @@ import org.kie.api.runtime.KieSession;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ *
+ * */
 public class RulesProcessor extends UntypedActor {
 
 	private final LoggingAdapter log = Logging.getLogger(getContext().system(), this);

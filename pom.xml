@@ -23,6 +23,9 @@
     </prerequisites>
 
     <properties>
+        <project.organization.name>UniCredit Business Integrated Solutions S.c.p.A</project.organization.name>
+        <project.inceptionYear>2015</project.inceptionYear>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -31,9 +34,6 @@
         <drools.version>6.3.0.Final</drools.version>
         <akka.version>2.4.0</akka.version>
         <scala.version>2.11</scala.version>
-
-        <project.organization.name>UniCredit Business Integrated Solutions S.c.p.A</project.organization.name>
-        <project.inceptionYear>2015</project.inceptionYear>
     </properties>
 
     <distributionManagement>
@@ -93,6 +93,13 @@
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>1.6</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.3</version>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
@@ -192,6 +199,17 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
         </plugins>
 
     </build>
@@ -240,6 +258,12 @@
         <developer>
             <name>Federico Stefanato</name>
             <email>fstefanato.external@unicredit.eu</email>
+            <organization>Unicredit</organization>
+            <organizationUrl>http://www.unicredit.eu</organizationUrl>
+        </developer>
+        <developer>
+            <name>Giovanni Condello</name>
+            <email>giovanni.condello@unicredit.eu</email>
             <organization>Unicredit</organization>
             <organizationUrl>http://www.unicredit.eu</organizationUrl>
         </developer>
