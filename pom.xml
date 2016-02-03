@@ -181,23 +181,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <keyname>UniCreditDnA (Maven Central GPG Key)</keyname>
-                    <passphraseServerId>${gpg.keyname}</passphraseServerId>
-                </configuration>
-            </plugin>
+
 
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
@@ -268,5 +252,38 @@
             <organizationUrl>http://www.unicredit.eu</organizationUrl>
         </developer>
     </developers>
+
+    <profiles>
+        <profile>
+            <id>sign-artifact-for-release</id>
+            <activation>
+                <property>
+                    <name>gpg.keyname</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <keyname>UniCreditDnA (Maven Central GPG Key)</keyname>
+                            <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
 
 </project>
