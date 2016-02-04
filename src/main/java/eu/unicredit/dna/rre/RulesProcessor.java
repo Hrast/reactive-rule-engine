@@ -86,20 +86,23 @@ public class RulesProcessor extends UntypedActor {
 
 		@Override
 		public void objectInserted(final ObjectInsertedEvent event) {
-			final Reaction reaction = (Reaction) event.getObject();
-			log.info("Generated object {}", reaction);
-			destination.tell(reaction, getSelf());
-			kSession.delete(event.getFactHandle());
+			if(event.getObject() instanceof Reaction) {
+				final Reaction reaction = (Reaction) event.getObject();
+				log.info("Generated object: {}", reaction);
+				destination.tell(reaction, getSelf());
+				kSession.delete(event.getFactHandle());
+			}
 		}
 
 		@Override
 		public void objectUpdated(final ObjectUpdatedEvent event) {
+			log.info("Updated object: {}", event.getObject());
 
 		}
 
 		@Override
 		public void objectDeleted(final ObjectDeletedEvent event) {
-
+			log.info("Deleted object: {}", event.getOldObject());
 		}
 	}
 }
