@@ -1,0 +1,10 @@
+import eu.unicredit.dna.rre.DemoMessage
+import eu.unicredit.dna.rre.DemoReaction
+
+rule "Bypass rule"
+      dialect "mvel"
+  when
+      m : DemoMessage()
+  then
+      insert(new DemoReaction())
+end

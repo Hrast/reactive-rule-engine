@@ -26,10 +26,7 @@ import akka.actor.UntypedActor;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import org.kie.api.KieServices;
-import org.kie.api.event.rule.ObjectDeletedEvent;
-import org.kie.api.event.rule.ObjectInsertedEvent;
-import org.kie.api.event.rule.ObjectUpdatedEvent;
-import org.kie.api.event.rule.RuleRuntimeEventListener;
+import org.kie.api.event.rule.*;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
@@ -61,10 +58,11 @@ public class RulesProcessor extends UntypedActor {
 
 	@Override
 	public void onReceive(Object message) throws Exception {
-		log.debug("Received {}", message.getClass().getSimpleName());
+		log.debug("Received message of class {}", message.getClass());
 		if (message instanceof DroolsMessage) {
 			kSession.insert(message);
 		} else {
+			log.debug("Message is not a DroolsMessage, ignoring...");
 			unhandled(message);
 		}
 	}
@@ -76,7 +74,7 @@ public class RulesProcessor extends UntypedActor {
 		kSession.dispose();
 	}
 
-	private class ReactionEventListener implements RuleRuntimeEventListener {
+	private class ReactionEventListener extends DefaultRuleRuntimeEventListener {
 
 		private final ActorRef destination;
 
@@ -86,23 +84,15 @@ public class RulesProcessor extends UntypedActor {
 
 		@Override
 		public void objectInserted(final ObjectInsertedEvent event) {
-			if(event.getObject() instanceof Reaction) {
-				final Reaction reaction = (Reaction) event.getObject();
-				log.info("Generated object: {}", reaction);
+			final Object eventObject = event.getObject();
+			if(eventObject instanceof Reaction) {
+				final Reaction reaction = (Reaction) eventObject;
+				log.info("Generated object {}", reaction);
 				destination.tell(reaction, getSelf());
 				kSession.delete(event.getFactHandle());
+			} else {
+				log.debug("Ignored event object of class {}", eventObject.getClass());
 			}
-		}
-
-		@Override
-		public void objectUpdated(final ObjectUpdatedEvent event) {
-			log.info("Updated object: {}", event.getObject());
-
-		}
-
-		@Override
-		public void objectDeleted(final ObjectDeletedEvent event) {
-			log.info("Deleted object: {}", event.getOldObject());
 		}
 	}
 }
